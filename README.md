@@ -2,7 +2,7 @@
 
 This project is split into two applications:
 
-- `backend/` - Spring Boot REST API with JWT security
+- `backend/` -Spring Boot REST API with JWT security
 - `frontend/` - React frontend integrated with the backend APIs
 
 ## Run Backend
