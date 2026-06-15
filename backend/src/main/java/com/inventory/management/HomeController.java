@@ -12,7 +12,7 @@ public class HomeController {
 	public Map<String, String> home() {
 		return Map.of(
 			"application", "Inventory Management System",
-			"milestone", "Milestone 1 completion",
+			"milestone", "Milestone 1 Completion",
 			"inventoryApi", "/api/inventory-items"
 		);
 	}
