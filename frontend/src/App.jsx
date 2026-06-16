@@ -6,6 +6,7 @@ import {
   ClipboardList,
   LogOut,
   PackagePlus,
+  Pencil,
   Search,
   ShieldCheck,
   Trash2,
@@ -376,7 +377,7 @@ function InventoryView(props) {
 
       <div className="panel">
         <div className="panelHeader">
-          <h2>Inventory Table</h2>
+          <h2>Inventory Items</h2>
           <span>{props.loading ? 'Loading...' : `${props.items.length} records`}</span>
         </div>
         <InventoryTable {...props} />
@@ -417,8 +418,8 @@ function InventoryTable({ items, isAdmin, onEdit, onDelete }) {
               {isAdmin && (
                 <td>
                   <div className="rowActions">
-                    <button className="linkButton" onClick={() => onEdit(item)}>Edit</button>
-                    <button className="dangerButton" onClick={() => onDelete(item)}><Trash2 size={16} /></button>
+                    <button className="iconButton" title="Edit" aria-label={`Edit ${item.itemName}`} onClick={() => onEdit(item)}><Pencil size={16} /></button>
+                    <button className="dangerButton" title="Delete" aria-label={`Delete ${item.itemName}`} onClick={() => onDelete(item)}><Trash2 size={16} /></button>
                   </div>
                 </td>
               )}
@@ -461,18 +462,17 @@ function InventoryModal({ form, setForm, fieldErrors, editingItem, onClose, onSu
         <div className="modalHeader">
           <div>
             <h2>{editingItem ? 'Update inventory item' : 'Add inventory item'}</h2>
-            <p>Fields match the Spring Boot InventoryItemRequest DTO.</p>
           </div>
           <button className="iconButton" type="button" onClick={onClose}><X size={18} /></button>
         </div>
 
         <div className="formGrid">
-          <Input label="Item name" name="itemName" form={form} setForm={setForm} error={fieldErrors.itemName} />
-          <Input label="Category" name="category" form={form} setForm={setForm} error={fieldErrors.category} />
+          <Input label="Item name" name="itemName" required form={form} setForm={setForm} error={fieldErrors.itemName} />
+          <Input label="Category" name="category" required form={form} setForm={setForm} error={fieldErrors.category} />
           <Input label="Description" name="description" form={form} setForm={setForm} error={fieldErrors.description} full textarea />
           <Input label="Quantity" name="quantity" type="number" form={form} setForm={setForm} error={fieldErrors.quantity} />
           <Input label="Threshold quantity" name="thresholdQuantity" type="number" form={form} setForm={setForm} error={fieldErrors.thresholdQuantity} />
-          <Input label="Supplier" name="supplier" form={form} setForm={setForm} error={fieldErrors.supplier} />
+          <Input label="Supplier" name="supplier" required form={form} setForm={setForm} error={fieldErrors.supplier} />
           <Input label="Price" name="price" type="number" form={form} setForm={setForm} error={fieldErrors.price} />
         </div>
 
@@ -485,14 +485,14 @@ function InventoryModal({ form, setForm, fieldErrors, editingItem, onClose, onSu
   );
 }
 
-function Input({ label, name, type = 'text', form, setForm, error, full, textarea }) {
+function Input({ label, name, type = 'text', form, setForm, error, full, textarea, required = false }) {
   const common = {
     value: form[name],
     onChange: (event) => setForm({ ...form, [name]: event.target.value })
   };
   return (
     <label className={full ? 'full' : ''}>
-      {label}
+      <span className="labelText">{label}{required && <span className="requiredMark">*</span>}</span>
       {textarea ? <textarea {...common} /> : <input type={type} {...common} />}
       {error && <span className="fieldError">{error}</span>}
     </label>
@@ -526,6 +526,11 @@ function StatusBadge({ status }) {
 }
 
 export default App;
+
+
+
+
+
 
 
 

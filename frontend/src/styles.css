@@ -569,3 +569,17 @@ label {
 
 
 
+
+.requiredMark {
+  color: var(--red);
+  font-weight: 900;
+  line-height: 1;
+}
+
+
+.labelText {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
